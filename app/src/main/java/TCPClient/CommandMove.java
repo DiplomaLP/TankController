@@ -16,6 +16,7 @@ public class CommandMove extends Command {
 
     @Override
     public String getCommand() {
-        return command + ":" + move + ";";
+        String ret = command + ":" + move + ";";
+        return ret;
     }
 }

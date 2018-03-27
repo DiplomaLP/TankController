@@ -14,9 +14,13 @@ import TCPClient.Client;
 public class ConnectActivity extends AppCompatActivity {
     ProgressBar progressBarStatus;
     TextView textViewStatus;
-    Client client;
+    static Client client;
     ConnectToServer asyncConnect;
     Button buttonConnect;
+
+    public static Client getClient() {
+        return client;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
