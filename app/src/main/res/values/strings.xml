@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">TankController</string>
+    <string name="app_name">Tank Controller</string>
+    <string name="server_ip">192.168.8.1</string>
+    <integer name="server_port">12345</integer>
 </resources>

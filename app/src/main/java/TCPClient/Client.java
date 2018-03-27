@@ -3,19 +3,26 @@ package TCPClient;
 
 public class Client {
 
+    public static final int OK = 0;
+
     public Client(){
 
     }
 
-    void connect(String ipAddress, int port) {
+    public int connect(String ipAddress, int port) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return OK;
+    }
+
+    public void disconnect() {
 
     }
 
-    void disconnect() {
-
-    }
-
-    void sendCommand(Command command) {
+    public void sendCommand(Command command) {
 
     }
 }
