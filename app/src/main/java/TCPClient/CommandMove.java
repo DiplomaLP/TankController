@@ -1,13 +1,16 @@
 package TCPClient;
 
 
+import java.util.Objects;
+
 public class CommandMove extends Command {
+    private String command;
     private int move;
 
     public CommandMove(String command, int move) throws Exception {
-        super(command);
+        this.command = command;
 
-        if (command != Commands.MOVE_LEFT && command != Commands.MOVE_RIGHT) {
+        if (!Objects.equals(command, Commands.MOVE_LEFT) && !Objects.equals(command, Commands.MOVE_RIGHT)) {
             throw new Exception("Bad command in!" + getClass().getName() + " , command = " + command);
         }
 

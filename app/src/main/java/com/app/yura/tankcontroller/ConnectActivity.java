@@ -83,12 +83,16 @@ public class ConnectActivity extends AppCompatActivity {
             progressBarStop();
             buttonConnect.setEnabled(true);
 
-            if (resultOfConnect != null && resultOfConnect.intValue() == Client.OK) {
-                setTextViewStatus("Connected!");
-
-                startMainActivity();
-            } else {
+            if (resultOfConnect == null || resultOfConnect.intValue() == Client.ERROR) {
                 setTextViewStatus("Do not connected!");
+
+            } else if (resultOfConnect.intValue() == Client.OK) {
+                setTextViewStatus("Connected!");
+                startMainActivity();
+                setTextViewStatus("Tap to connect to the tank server");
+
+            } else if (resultOfConnect.intValue() == Client.ALREADY_CONNECTED){
+                setTextViewStatus("The client already connected!");
             }
         }
     }
