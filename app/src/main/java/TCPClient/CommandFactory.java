@@ -4,10 +4,14 @@ import android.support.annotation.Nullable;
 
 public class CommandFactory {
     @Nullable
-    public static Command CreateCommand(String command, int move) throws Exception {
+    public static Command CreateCommand(String command, int value) throws Exception {
 
         if (command.equals(Commands.MOVE_LEFT) || command.equals(Commands.MOVE_RIGHT)) {
-            return new CommandMove(command, move);
+            return new CommandMove(command, value);
+        } else if (command.equals(Commands.MOVE_CAMERA)) {
+            return new CommandMoveCamera(value);
+        } else if (command.equals(Commands.LIGHT_TURN)) {
+            return new CommandLight(value);
         }
 
         return null;

@@ -1,13 +1,19 @@
 package com.app.yura.tankcontroller;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.SeekBar;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import TCPClient.Client;
 import TCPClient.Command;
@@ -23,35 +29,123 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button buttonLeft = (Button)findViewById(R.id.buttonLeft);
-        Button buttonRight = (Button)findViewById(R.id.buttonRight);
+//        Button buttonLeft = (Button)findViewById(R.id.buttonLeft);
+//        Button buttonRight = (Button)findViewById(R.id.buttonRight);
 
         final Client client = ConnectActivity.getClient();
 
-        buttonLeft.setOnClickListener(new View.OnClickListener() {
+//        buttonLeft.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Command command = null;
+//                try {
+//                    command = CommandFactory.CreateCommand(Commands.MOVE_LEFT, 0);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                client.sendCommand(command, false);
+//                showVideo();
+//            }
+//        });
+//
+//        buttonRight.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Command command = null;
+//                try {
+//                    command = CommandFactory.CreateCommand(Commands.MOVE_RIGHT, 0);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                client.sendCommand(command, false);
+//            }
+//        });
+
+        final TextView textViewMoveCamera = (TextView)findViewById(R.id.textViewMoveCamera);
+
+        final SeekBar seekBarMoveCamera = (SeekBar)findViewById(R.id.seekBarMoveCamera);
+        seekBarMoveCamera.setMin(getResources().getInteger(R.integer.move_camera_min));
+        seekBarMoveCamera.setMax(getResources().getInteger(R.integer.move_camera_max));
+
+        seekBarMoveCamera.setProgress(seekBarMoveCamera.getMax() / 2);
+
+        seekBarMoveCamera.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onClick(View v) {
-                Command command = null;
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 try {
-                    command = CommandFactory.CreateCommand(Commands.MOVE_LEFT, 0);
+                    Command command = CommandFactory.CreateCommand(Commands.MOVE_CAMERA, progress);
+                    client.sendCommand(command, false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                client.sendCommand(command, false);
-                showVideo();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
 
-        buttonRight.setOnClickListener(new View.OnClickListener() {
+        SeekBar seekBarLeft = (SeekBar)findViewById(R.id.seekBarMoveLeft);
+        seekBarLeft.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onClick(View v) {
-                Command command = null;
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 try {
-                    command = CommandFactory.CreateCommand(Commands.MOVE_RIGHT, 0);
+                    Command command = CommandFactory.CreateCommand(Commands.MOVE_LEFT, progress);
+                    client.sendCommand(command, false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                client.sendCommand(command, false);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        SeekBar seekBarRight = (SeekBar)findViewById(R.id.seekBarMoveRight);
+        seekBarRight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                try {
+                    Command command = CommandFactory.CreateCommand(Commands.MOVE_RIGHT, progress);
+                    client.sendCommand(command, false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        Switch swithcLight = (Switch)findViewById(R.id.switchLight);
+        swithcLight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                try {
+                    Command command = CommandFactory.CreateCommand(Commands.LIGHT_TURN, isChecked?1:0);
+                    client.sendCommand(command, false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -75,32 +169,11 @@ public class MainActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 view.loadUrl("javascript:callFromActivitySetPassword(\""+"12345678"+"\")");
-//                showVideo();
             }
         });
 
-        String script = "<script type=\"text/javascript\">\n" +
-                "function setPassword()" +
-                "{" +
-                "  document.getElementById('password').value = '12345678';" +
-//                "  document.myform.submit();" +
-                "}" +
-                " window.onload = setPassword;" +
-                "</script>";
         web.loadUrl("http://192.168.8.1");
-//        web.loadDataWithBaseURL("http://192.168.8.1", script, "text/html","utf-8", null);
     }
-
-//    private void login()
-//    {
-//        String password = "12345678";
-//
-//        try {
-//            Jsoup.connect("http://192.168.8.1").data("password", password).post();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     @Override
     protected void onResume() {
@@ -110,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 showVideo();
             }
-        }, 5000);
+        }, 10000);
 
 //        login();
     }
@@ -118,8 +191,6 @@ public class MainActivity extends AppCompatActivity {
     private void showVideo()
     {
         web.loadUrl("http://192.168.8.1:8080");
-        web.zoomBy(0.1f);
-
     }
     @Override
     protected void onDestroy() {
@@ -127,12 +198,3 @@ public class MainActivity extends AppCompatActivity {
         ConnectActivity.client.disconnect();
     }
 }
-
-//private class WebViewInterface{
-//
-//
-//    @JavascriptInterface
-//    public void onError(String error){
-//        throw new Error(error);
-//    }
-//}

@@ -3,4 +3,6 @@
     <string name="server_ip">192.168.8.1</string>
     <integer name="server_port">12345</integer>
     <string name="streamAddress">http://192.168.8.1:8080</string>
+    <integer name="move_camera_min">0</integer>
+    <integer name="move_camera_max">100</integer>
 </resources>
