@@ -29,37 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Button buttonLeft = (Button)findViewById(R.id.buttonLeft);
-//        Button buttonRight = (Button)findViewById(R.id.buttonRight);
-
         final Client client = ConnectActivity.getClient();
-
-//        buttonLeft.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Command command = null;
-//                try {
-//                    command = CommandFactory.CreateCommand(Commands.MOVE_LEFT, 0);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                client.sendCommand(command, false);
-//                showVideo();
-//            }
-//        });
-//
-//        buttonRight.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Command command = null;
-//                try {
-//                    command = CommandFactory.CreateCommand(Commands.MOVE_RIGHT, 0);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                client.sendCommand(command, false);
-//            }
-//        });
 
         final TextView textViewMoveCamera = (TextView)findViewById(R.id.textViewMoveCamera);
 
@@ -159,8 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url){
-                // do your handling codes here, which url is the requested url
-                // probably you need to open that url rather than redirect:
                 view.loadUrl(url);
                 return false; // then it is not handled by default action
             }
@@ -184,8 +152,6 @@ public class MainActivity extends AppCompatActivity {
                 showVideo();
             }
         }, 10000);
-
-//        login();
     }
 
     private void showVideo()
