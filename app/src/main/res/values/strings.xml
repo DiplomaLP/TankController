@@ -2,4 +2,5 @@
     <string name="app_name">Tank Controller</string>
     <string name="server_ip">192.168.8.1</string>
     <integer name="server_port">12345</integer>
+    <string name="streamAddress">http://192.168.8.1:8080</string>
 </resources>
