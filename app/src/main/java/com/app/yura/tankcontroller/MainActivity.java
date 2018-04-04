@@ -10,6 +10,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.CompoundButton;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -149,8 +150,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 showVideo();
+
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                TextView textViewGetVideoStream = (TextView)findViewById(R.id.textViewGetVideoStream);
+                textViewGetVideoStream.setVisibility(TextView.INVISIBLE);
+
+                ProgressBar progressBarStream = (ProgressBar)findViewById(R.id.progressBarLoadVideo);
+                progressBarStream.setVisibility(ProgressBar.INVISIBLE);
+
+                web.setVisibility(WebView.VISIBLE);
             }
         }, 10000);
+
     }
 
     private void showVideo()
@@ -162,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             exitByBackKey();
-            
+
             return true;
         }
         return super.onKeyDown(keyCode, event);
