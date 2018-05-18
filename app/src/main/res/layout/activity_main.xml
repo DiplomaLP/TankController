@@ -22,15 +22,12 @@
     <SeekBar
         android:id="@+id/seekBarMoveCamera"
         style="@android:style/Widget.DeviceDefault.Light.SeekBar"
-        android:layout_width="297dp"
+        android:layout_width="218dp"
         android:layout_height="29dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
         android:max="100"
         android:min="0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/webView" />
 
@@ -39,78 +36,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="200dp"
+        android:layout_marginStart="63dp"
         android:text="Rotare Camera"
         android:textColor="@android:color/background_dark"
-        android:textSize="22sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/seekBarMoveCamera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/webView" />
-
-    <SeekBar
-        android:id="@+id/seekBarMoveLeft"
-        android:layout_width="140dp"
-        android:layout_height="204dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:max="100"
-        android:rotation="270"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMoveCamera"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <SeekBar
-        android:id="@+id/seekBarMoveRight"
-        android:layout_width="144dp"
-        android:layout_height="206dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:max="100"
-        android:rotation="270"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMoveCamera"
+        app:layout_constraintTop_toBottomOf="@+id/webView"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="63dp"
-        android:layout_height="93dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="58dp"
+        android:layout_height="26dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Turn \nlight \nOn/\nOff"
+        android:text="Light"
         android:textAlignment="center"
         android:textColor="@android:color/background_dark"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/seekBarMoveRight"
-        app:layout_constraintHorizontal_bias="0.521"
-        app:layout_constraintStart_toEndOf="@+id/seekBarMoveLeft"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarMoveCamera" />
+        app:layout_constraintBottom_toTopOf="@+id/switchLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.68"
+        app:layout_constraintStart_toEndOf="@+id/textViewMoveCamera" />
 
     <Switch
         android:id="@+id/switchLight"
         android:layout_width="54dp"
-        android:layout_height="43dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="28dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text=" "
         android:textColorLink="@color/colorPrimary"
         android:textOff="Off"
         android:textOn="On"
         android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/seekBarMoveRight"
-        app:layout_constraintStart_toEndOf="@+id/seekBarMoveLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/seekBarMoveCamera"
+        tools:layout_editor_absoluteY="241dp" />
 
     <ProgressBar
         android:id="@+id/progressBarLoadVideo"
@@ -142,5 +108,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <io.github.controlwear.virtual.joystick.android.JoystickView xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:layout_width="239dp"
+        android:layout_height="231dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        custom:JV_backgroundColor="#009688"
+        custom:JV_borderColor="#00796B"
+        custom:JV_borderWidth="4dp"
+        custom:JV_buttonColor="#FF6E40"
+        custom:JV_buttonSizeRatio="15%"
+        custom:JV_fixedCenter="false"
+        custom:layout_constraintBottom_toBottomOf="parent"
+        custom:layout_constraintEnd_toEndOf="parent"
+        custom:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
