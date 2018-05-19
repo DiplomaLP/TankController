@@ -67,11 +67,7 @@ public class MainActivity extends AppCompatActivity {
         joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-
-                // init
-//                int leftPower = 50;
-//                int rightPower = 50;
-
+                
                 double angle45 = Math.toRadians(45);
                 double leftVectorX = Math.cos(angle45) / 2.0;
                 double leftVectorY = Math.sin(angle45) / 2.0;
@@ -104,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }, 50);
-        
+
         Switch swithcLight = (Switch)findViewById(R.id.switchLight);
         swithcLight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
