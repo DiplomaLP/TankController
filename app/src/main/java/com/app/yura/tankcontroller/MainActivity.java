@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 double resultVectorX = Math.cos(Math.toRadians(angle)) / 2.0 * strength / 100.0;
                 double resultVectorY = Math.sin(Math.toRadians(angle)) / 2.0 * strength / 100.0;
 
-//                double leftPower = resultVectorX
                 double rightPower = (resultVectorY - resultVectorX) / (rightVectorY - rightVectorX);
                 double leftPower = (resultVectorX - rightVectorX * rightPower) / leftVectorX;
 
