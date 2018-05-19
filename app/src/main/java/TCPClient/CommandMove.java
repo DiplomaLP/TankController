@@ -7,6 +7,8 @@ public class CommandMove extends Command {
     private String command;
     private int move;
 
+    public static int POWER_RATIO = 50;
+
     public CommandMove(String command, int move) throws Exception {
         this.command = command;
 

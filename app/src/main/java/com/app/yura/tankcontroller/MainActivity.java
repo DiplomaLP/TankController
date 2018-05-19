@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -18,7 +19,9 @@ import android.widget.TextView;
 import TCPClient.Client;
 import TCPClient.Command;
 import TCPClient.CommandFactory;
+import TCPClient.CommandMove;
 import TCPClient.Commands;
+import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 public class MainActivity extends AppCompatActivity {
     WebView web;
@@ -60,52 +63,48 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        SeekBar seekBarLeft = (SeekBar)findViewById(R.id.seekBarMoveLeft);
-        seekBarLeft.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        JoystickView joystick = (JoystickView) findViewById(R.id.JoystickMoveView);
+        joystick.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            public void onMove(int angle, int strength) {
+
+                // init
+//                int leftPower = 50;
+//                int rightPower = 50;
+
+                double angle45 = Math.toRadians(45);
+                double leftVectorX = Math.cos(angle45) / 2.0;
+                double leftVectorY = Math.sin(angle45) / 2.0;
+
+                double rightVectorX = -Math.cos(angle45) / 2.0;
+                double rightVectorY = Math.sin(angle45) / 2.0;
+
+
+                double resultVectorX = Math.cos(Math.toRadians(angle)) / 2.0 * strength / 100.0;
+                double resultVectorY = Math.sin(Math.toRadians(angle)) / 2.0 * strength / 100.0;
+
+//                double leftPower = resultVectorX
+                double rightPower = (resultVectorY - resultVectorX) / (rightVectorY - rightVectorX);
+                double leftPower = (resultVectorX - rightVectorX * rightPower) / leftVectorX;
+
+                rightPower = rightPower * CommandMove.POWER_RATIO + CommandMove.POWER_RATIO;
+                leftPower = leftPower * CommandMove.POWER_RATIO + CommandMove.POWER_RATIO;
+
+                Log.d("tank", "angle = " + angle + " strength = " + strength + "left = " + leftPower + " right = " + rightPower +
+                "resVx = " + resultVectorX + " resVy = " + resultVectorY);
+
                 try {
-                    Command command = CommandFactory.CreateCommand(Commands.MOVE_LEFT, progress);
-                    client.sendCommand(command, false);
+                    Command leftCommand = null;
+                    leftCommand = CommandFactory.CreateCommand(Commands.MOVE_LEFT, (int)leftPower);
+                    client.sendCommand(leftCommand, false);
+                    Command rightCommand = CommandFactory.CreateCommand(Commands.MOVE_RIGHT, (int) rightPower);
+                    client.sendCommand(rightCommand , false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        SeekBar seekBarRight = (SeekBar)findViewById(R.id.seekBarMoveRight);
-        seekBarRight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                try {
-                    Command command = CommandFactory.CreateCommand(Commands.MOVE_RIGHT, progress);
-                    client.sendCommand(command, false);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
+        }, 50);
+        
         Switch swithcLight = (Switch)findViewById(R.id.switchLight);
         swithcLight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
